@@ -1,0 +1,211 @@
+.builder {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 57px);
+}
+
+.builder-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-4) var(--space-6);
+  border-bottom: var(--border-width) solid var(--gray-200);
+  background: var(--white);
+  gap: var(--space-4);
+  flex-wrap: wrap;
+}
+
+.builder-title h1 {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--black);
+  margin-bottom: var(--space-1);
+}
+
+.builder-title p {
+  font-size: 13px;
+  color: var(--gray-500);
+  font-family: var(--font-mono);
+}
+
+.builder-actions {
+  display: flex;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+
+.builder-content {
+  flex: 1;
+  display: flex;
+  overflow: hidden;
+}
+
+.blockly-container {
+  background: var(--white);
+  position: relative;
+}
+
+/* Output Panel */
+.output-panel {
+  flex: 0 0 40%;
+  background: var(--white);
+  border-left: var(--border-width) solid var(--gray-200);
+  display: flex;
+  flex-direction: column;
+}
+
+.output-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-4) var(--space-5);
+  border-bottom: var(--border-width) solid var(--gray-200);
+  background: var(--gray-50);
+}
+
+.output-header h3 {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--black);
+}
+
+.btn-close {
+  padding: var(--space-1) var(--space-2);
+  background: transparent;
+  border: none;
+  color: var(--gray-500);
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.btn-close:hover {
+  color: var(--black);
+}
+
+.output-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--space-5);
+}
+
+.output-empty {
+  color: var(--gray-400);
+  text-align: center;
+  padding: var(--space-8) var(--space-4);
+  font-size: 14px;
+}
+
+.output-item {
+  padding: var(--space-3) var(--space-4);
+  margin-bottom: var(--space-3);
+  border: var(--border-width) solid var(--gray-200);
+  font-size: 14px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  font-family: var(--font-mono);
+}
+
+.output-processing {
+  background: var(--gray-50);
+  color: var(--gray-600);
+}
+
+.output-complete {
+  background: #f0fdf4;
+  border-color: #bbf7d0;
+  color: #166534;
+}
+
+.output-error {
+  background: #fef2f2;
+  border-color: #fecaca;
+  color: #991b1b;
+}
+
+.output-result {
+  background: var(--white);
+  border-color: var(--gray-300);
+  color: var(--black);
+  font-family: var(--font-sans);
+}
+
+.builder-footer {
+  padding: var(--space-3) var(--space-6);
+  border-top: var(--border-width) solid var(--gray-200);
+  background: var(--gray-50);
+  text-align: center;
+}
+
+.builder-footer p {
+  font-size: 13px;
+  color: var(--gray-500);
+  font-family: var(--font-mono);
+}
+
+/* Blockly customization */
+.blockly-container .blocklyToolboxDiv {
+  background: var(--gray-50) !important;
+  border-right: var(--border-width) solid var(--gray-200) !important;
+}
+
+.blockly-container .blocklyFlyoutBackground {
+  fill: var(--white) !important;
+}
+
+.blockly-container .blocklyMainBackground {
+  fill: var(--white) !important;
+}
+
+.blockly-container .blocklyTreeLabel {
+  font-family: var(--font-mono) !important;
+  font-size: 13px !important;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .builder-header {
+    padding: var(--space-3) var(--space-4);
+  }
+
+  .builder-actions {
+    width: 100%;
+  }
+
+  .builder-actions button {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .builder-content {
+    flex-direction: column;
+  }
+
+  .blockly-container {
+    flex: 0 0 50% !important;
+    min-height: 400px;
+  }
+
+  .output-panel {
+    flex: 0 0 50%;
+    border-left: none;
+    border-top: var(--border-width) solid var(--gray-200);
+  }
+
+  .builder-footer {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .builder-title p {
+    display: none;
+  }
+
+  .builder-actions button {
+    font-size: 13px;
+    padding: var(--space-2) var(--space-3);
+  }
+}
