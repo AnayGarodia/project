@@ -218,9 +218,9 @@ export default function Builder() {
           }
 
           alert(
-            `✅ Gmail connected!\nAccount: ${data.userEmail}${
+            ` Gmail connected!\nAccount: ${data.userEmail}${
               data.testMode
-                ? "\n\n⚠️ TEST MODE: Emails will be validated but NOT sent"
+                ? "\n\n TEST MODE: Emails will be validated but NOT sent"
                 : ""
             }`
           );
@@ -252,11 +252,11 @@ export default function Builder() {
         executor.current.setGmailStatus(false);
         setShowAccountManager(false);
         setShowDisconnectConfirm(false);
-        alert("✅ Gmail disconnected!");
+        alert(" Gmail disconnected!");
       }
     } catch (err) {
       console.error("Error disconnecting Gmail:", err);
-      alert("❌ Failed to disconnect Gmail");
+      alert(" Failed to disconnect Gmail");
     }
   };
 
@@ -328,18 +328,18 @@ export default function Builder() {
   // Get appropriate emoji for output type
   const getOutputEmoji = (type) => {
     const emojiMap = {
-      log: "📝",
-      success: "✅",
-      error: "❌",
-      warning: "⚠️",
-      info: "ℹ️",
-      "ai-generated": "✨",
-      "ai-result": "💡",
-      "email-preview": "📧",
-      "email-sending": "📤",
-      "email-sent": "✅",
-      "test-mode": "🧪",
-      result: "📊",
+      log: "",
+      success: "",
+      error: "",
+      warning: "",
+      info: "",
+      "ai-generated": "",
+      "ai-result": "",
+      "email-preview": "",
+      "email-sending": "",
+      "email-sent": "",
+      "test-mode": "",
+      result: "",
     };
     return emojiMap[type] || "•";
   };
@@ -359,19 +359,19 @@ export default function Builder() {
             onClick={() => loadTemplate("customerSupport")}
             className="btn-secondary"
           >
-            🎫 Support Agent
+             Support Agent
           </button>
           <button
             onClick={() => loadTemplate("salesReport")}
             className="btn-secondary"
           >
-            📊 Sales Agent
+             Sales Agent
           </button>
           <button
             onClick={() => loadTemplate("gmailAutoReply")}
             className="btn-secondary"
           >
-            📧 Gmail Agent
+             Gmail Agent
           </button>
 
           {/* Clear Button */}
@@ -379,7 +379,7 @@ export default function Builder() {
             onClick={() => workspace.current?.clear()}
             className="btn-secondary"
           >
-            🗑️ Clear
+             Clear
           </button>
 
           {/* Gmail Account Button */}
@@ -388,12 +388,12 @@ export default function Builder() {
               onClick={() => setShowAccountManager(true)}
               className="btn-secondary gmail-connected-btn"
             >
-              {gmailTestMode ? "🧪" : "✅"}{" "}
+              {gmailTestMode ? "" : ""}{" "}
               {gmailUserEmail?.split("@")[0] || "Gmail"}
             </button>
           ) : (
             <button onClick={connectGmail} className="btn-secondary gmail-btn">
-              🔗 Connect Gmail
+               Connect Gmail
             </button>
           )}
 
@@ -403,7 +403,7 @@ export default function Builder() {
             disabled={isRunning}
             className="btn-primary"
           >
-            {isRunning ? "⏳ Running..." : "▶️ Run Workflow"}
+            {isRunning ? " Running..." : " Run Workflow"}
           </button>
         </div>
       </div>
@@ -412,9 +412,9 @@ export default function Builder() {
       {(gmailConnected && gmailTestMode) || groqApiCalls > 0 ? (
         <div className="info-banner">
           {gmailConnected && gmailTestMode && (
-            <span>🧪 TEST MODE: Emails validated but NOT sent</span>
+            <span> TEST MODE: Emails validated but NOT sent</span>
           )}
-          {groqApiCalls > 0 && <span>📊 Groq API Calls: {groqApiCalls}</span>}
+          {groqApiCalls > 0 && <span> Groq API Calls: {groqApiCalls}</span>}
         </div>
       ) : null}
 
@@ -425,16 +425,16 @@ export default function Builder() {
           onClick={() => setShowAccountManager(false)}
         >
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <h2>📧 Gmail Account</h2>
+            <h2> Gmail Account</h2>
             <div className="account-info">
               <p className="connected-status">
-                {gmailTestMode ? "🧪 Test Mode Active" : "✅ Connected"}
+                {gmailTestMode ? " Test Mode Active" : " Connected"}
               </p>
               <div className="email-display">{gmailUserEmail}</div>
 
               {gmailTestMode && (
                 <div className="test-mode-info">
-                  <strong>⚠️ TEST MODE</strong>
+                  <strong> TEST MODE</strong>
                   <p>Emails are validated but NOT sent</p>
                   <p style={{ fontSize: "12px", marginTop: "8px" }}>
                     Change TEST_MODE in gmailServer.js to enable production mode
@@ -453,7 +453,7 @@ export default function Builder() {
                   onClick={() => setShowDisconnectConfirm(true)}
                   className="btn-danger"
                 >
-                  🔓 Disconnect
+                   Disconnect
                 </button>
               </div>
             </div>
@@ -468,7 +468,7 @@ export default function Builder() {
           onClick={() => setShowDisconnectConfirm(false)}
         >
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <h2>⚠️ Disconnect Gmail?</h2>
+            <h2> Disconnect Gmail?</h2>
             <p>Are you sure you want to disconnect {gmailUserEmail}?</p>
             <div className="modal-actions">
               <button
@@ -489,14 +489,14 @@ export default function Builder() {
       {showGmailPrompt && (
         <div className="modal-overlay">
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <h2>📧 Gmail Required</h2>
+            <h2> Gmail Required</h2>
             <p>This workflow needs Gmail access to continue.</p>
             <p className="account-note">
               Connect your Gmail account to proceed with email operations.
             </p>
             <div className="modal-actions">
               <button onClick={connectGmail} className="btn-primary">
-                🔗 Connect Gmail Now
+                 Connect Gmail Now
               </button>
             </div>
           </div>
@@ -513,7 +513,7 @@ export default function Builder() {
         {showOutput && (
           <div className="output-panel">
             <div className="output-header">
-              <h3>📤 Output</h3>
+              <h3> Output</h3>
               <button
                 onClick={() => setShowOutput(false)}
                 className="btn-close"
@@ -554,7 +554,7 @@ export default function Builder() {
 
       <div className="builder-footer">
         <p>
-          💡 Tip: Gmail connection will be requested automatically when needed
+           Tip: Gmail connection will be requested automatically when needed
           during workflow execution
         </p>
       </div>

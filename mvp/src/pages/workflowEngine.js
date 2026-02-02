@@ -49,7 +49,7 @@ export class WorkflowExecutor {
   // Check Gmail connection before Gmail operations
   async ensureGmailConnected() {
     if (!this.gmailConnected) {
-      this.addOutput("warning", "⚠️  Gmail connection required");
+      this.addOutput("warning", "  Gmail connection required");
 
       if (this.onGmailRequired) {
         // Trigger the Gmail connection prompt
@@ -93,7 +93,7 @@ export class WorkflowExecutor {
   async fetchUnreadEmails() {
     await this.ensureGmailConnected();
 
-    this.addOutput("log", "📬 Fetching unread emails...");
+    this.addOutput("log", " Fetching unread emails...");
 
     try {
       const response = await fetch("http://localhost:3001/api/emails/unread");
@@ -102,7 +102,7 @@ export class WorkflowExecutor {
       if (data.emails && data.emails.length > 0) {
         this.addOutput(
           "success",
-          `✅ Found ${data.emails.length} unread email(s)`,
+          ` Found ${data.emails.length} unread email(s)`,
           {
             count: data.emails.length,
           }
@@ -124,18 +124,18 @@ export class WorkflowExecutor {
 
         return data.emails;
       } else {
-        this.addOutput("info", "📭 No unread emails found");
+        this.addOutput("info", " No unread emails found");
         return [];
       }
     } catch (err) {
-      this.addOutput("error", `❌ Failed to fetch emails: ${err.message}`);
+      this.addOutput("error", ` Failed to fetch emails: ${err.message}`);
       throw err;
     }
   }
 
   // Generate AI reply with detailed output
   async generateAIReply(emailBody, task, subject, from) {
-    this.addOutput("log", `🤖 Generating AI reply for email from ${from}...`);
+    this.addOutput("log", ` Generating AI reply for email from ${from}...`);
 
     try {
       const response = await fetch("http://localhost:3001/api/ai/reply", {
@@ -154,7 +154,7 @@ export class WorkflowExecutor {
       if (response.ok && data.text) {
         this.addOutput(
           "ai-generated",
-          `✨ AI Reply Generated (${data.text.length} chars):\n\n${data.text}`,
+          ` AI Reply Generated (${data.text.length} chars):\n\n${data.text}`,
           {
             replyText: data.text,
             length: data.text.length,
@@ -164,11 +164,11 @@ export class WorkflowExecutor {
 
         return data.text;
       } else {
-        this.addOutput("error", `❌ AI generation failed: ${data.error}`);
+        this.addOutput("error", ` AI generation failed: ${data.error}`);
         throw new Error(data.error || "AI generation failed");
       }
     } catch (err) {
-      this.addOutput("error", `❌ AI generation error: ${err.message}`);
+      this.addOutput("error", ` AI generation error: ${err.message}`);
       throw err;
     }
   }
@@ -177,12 +177,12 @@ export class WorkflowExecutor {
   async sendEmailReply(emailId, replyBody, subject, to, threadId) {
     await this.ensureGmailConnected();
 
-    this.addOutput("log", `📤 Sending reply to ${to}...`);
+    this.addOutput("log", ` Sending reply to ${to}...`);
 
     // Show what we're sending
     this.addOutput(
       "email-sending",
-      `📧 Email Details:\n  To: ${to}\n  Subject: Re: ${subject}\n  Length: ${
+      ` Email Details:\n  To: ${to}\n  Subject: Re: ${subject}\n  Length: ${
         replyBody.length
       } chars\n\nBody preview:\n${replyBody.substring(0, 200)}...`,
       {
@@ -212,13 +212,13 @@ export class WorkflowExecutor {
         if (data.testMode) {
           this.addOutput(
             "test-mode",
-            `🧪 TEST MODE: Email validated but NOT sent\n\nThis email would have been sent to: ${data.emailDetails?.to}`,
+            ` TEST MODE: Email validated but NOT sent\n\nThis email would have been sent to: ${data.emailDetails?.to}`,
             { emailDetails: data.emailDetails }
           );
         } else {
           this.addOutput(
             "email-sent",
-            `✅ Email sent successfully!\n  To: ${data.emailDetails?.to}\n  Message ID: ${data.messageId}`,
+            ` Email sent successfully!\n  To: ${data.emailDetails?.to}\n  Message ID: ${data.messageId}`,
             {
               messageId: data.messageId,
               emailDetails: data.emailDetails,
@@ -228,11 +228,11 @@ export class WorkflowExecutor {
 
         return data;
       } else {
-        this.addOutput("error", `❌ Failed to send email: ${data.error}`);
+        this.addOutput("error", ` Failed to send email: ${data.error}`);
         throw new Error(data.error || "Send failed");
       }
     } catch (err) {
-      this.addOutput("error", `❌ Send error: ${err.message}`);
+      this.addOutput("error", ` Send error: ${err.message}`);
       throw err;
     }
   }
@@ -254,24 +254,24 @@ export class WorkflowExecutor {
       const data = await response.json();
 
       if (response.ok) {
-        this.addOutput("log", `✅ Email marked as read`);
+        this.addOutput("log", ` Email marked as read`);
         return true;
       } else {
         this.addOutput(
           "warning",
-          `⚠️  Could not mark email as read: ${data.error}`
+          `  Could not mark email as read: ${data.error}`
         );
         return false;
       }
     } catch (err) {
-      this.addOutput("warning", `⚠️  Mark as read error: ${err.message}`);
+      this.addOutput("warning", `  Mark as read error: ${err.message}`);
       return false;
     }
   }
 
   // Call AI for analysis/generation (non-Gmail)
   async callAI(input, task) {
-    this.addOutput("log", `🧠 Calling AI: ${task.substring(0, 60)}...`);
+    this.addOutput("log", ` Calling AI: ${task.substring(0, 60)}...`);
 
     try {
       const response = await fetch("http://localhost:3001/api/ai", {
@@ -283,16 +283,16 @@ export class WorkflowExecutor {
       const data = await response.json();
 
       if (response.ok && data.text) {
-        this.addOutput("ai-result", `💡 AI Result:\n${data.text}`, {
+        this.addOutput("ai-result", ` AI Result:\n${data.text}`, {
           result: data.text,
         });
         return data.text;
       } else {
-        this.addOutput("error", `❌ AI call failed: ${data.error}`);
+        this.addOutput("error", ` AI call failed: ${data.error}`);
         throw new Error(data.error || "AI call failed");
       }
     } catch (err) {
-      this.addOutput("error", `❌ AI error: ${err.message}`);
+      this.addOutput("error", ` AI error: ${err.message}`);
       throw err;
     }
   }
@@ -302,7 +302,7 @@ export class WorkflowExecutor {
     this.output = [];
     this.onOutput = onOutputCallback;
 
-    this.addOutput("log", "🚀 Starting workflow execution...");
+    this.addOutput("log", " Starting workflow execution...");
 
     try {
       // Check Gmail status at start
@@ -373,7 +373,7 @@ export class WorkflowExecutor {
         // Variable functions
         setVariable: (name, value) => {
           this.variables[name] = value;
-          this.addOutput("log", `📝 Variable set: ${name}`);
+          this.addOutput("log", ` Variable set: ${name}`);
         },
 
         getVariable: (name) => {
@@ -391,7 +391,7 @@ export class WorkflowExecutor {
 try {
 ${code}
 } catch (error) {
-  context.log("❌ Error in workflow: " + error.message);
+  context.log(" Error in workflow: " + error.message);
   throw error;
 }
 `;
@@ -400,7 +400,7 @@ ${code}
 
       await executor(context);
 
-      this.addOutput("success", "✅ Workflow completed successfully!");
+      this.addOutput("success", " Workflow completed successfully!");
 
       return {
         success: true,
@@ -408,7 +408,7 @@ ${code}
         message: "Workflow completed",
       };
     } catch (error) {
-      this.addOutput("error", `❌ Execution error: ${error.message}`);
+      this.addOutput("error", ` Execution error: ${error.message}`);
 
       // Add stack trace for debugging
       if (error.stack) {

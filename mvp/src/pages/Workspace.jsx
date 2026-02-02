@@ -57,7 +57,7 @@ function Workspace() {
       contents: [
         {
           kind: "category",
-          name: "🤖 Agent Control",
+          name: " Agent Control",
           colour: "#7c3aed",
           contents: [
             { kind: "block", type: "agent_start" },
@@ -66,7 +66,7 @@ function Workspace() {
         },
         {
           kind: "category",
-          name: "🧠 AI Processing",
+          name: " AI Processing",
           colour: "#10b981",
           contents: [
             { kind: "block", type: "ai_analyze" },
@@ -76,13 +76,13 @@ function Workspace() {
         },
         {
           kind: "category",
-          name: "📥 Input Data",
+          name: " Input Data",
           colour: "#f59e0b",
           contents: [{ kind: "block", type: "input_data" }],
         },
         {
           kind: "category",
-          name: "📦 Data Tools",
+          name: " Data Tools",
           colour: "#6b7280",
           contents: [
             { kind: "block", type: "simple_text" },
@@ -92,7 +92,7 @@ function Workspace() {
         },
         {
           kind: "category",
-          name: "📤 Output",
+          name: " Output",
           colour: "#ec4899",
           contents: [
             { kind: "block", type: "display_result" },
@@ -550,7 +550,7 @@ function Workspace() {
               className="template-card"
               onClick={() => loadTemplate("customerSupport")}
             >
-              <div className="template-icon">💬</div>
+              <div className="template-icon"></div>
               <h4>Customer Support</h4>
               <p>
                 Automatically analyze customer emails and draft professional
@@ -561,7 +561,7 @@ function Workspace() {
               className="template-card"
               onClick={() => loadTemplate("salesReport")}
             >
-              <div className="template-icon">📊</div>
+              <div className="template-icon"></div>
               <h4>Sales Report</h4>
               <p>
                 Transform sales data into actionable insights and executive
@@ -584,7 +584,7 @@ function Workspace() {
         {showOutput && (
           <div className="output-panel">
             <div className="output-header">
-              <span>📋 Execution Results</span>
+              <span> Execution Results</span>
               <button
                 className="output-close"
                 onClick={() => setShowOutput(false)}
@@ -682,9 +682,9 @@ function Workspace() {
       {/* Footer */}
       <div className="workspace-footer">
         <div className="footer-info">
-          <span className="footer-icon">💡</span>
+          <span className="footer-icon"></span>
           <span>
-            Tip: Start with a template or drag the "🤖 Start Agent" block to
+            Tip: Start with a template or drag the " Start Agent" block to
             begin
           </span>
         </div>

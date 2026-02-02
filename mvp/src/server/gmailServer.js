@@ -21,7 +21,8 @@ const MIN_REPLY_LENGTH = 50;
 
 // 2. ALLOWED USERS (These people will actually receive emails in TEST_MODE)
 const ALLOWED_TEST_EMAILS = new Set(
-  ["agarodia98@gmail.com"].map((e) => e.toLowerCase())
+  ["agarodia98@gmail.com"].map((e) => e.toLowerCase()),
+  ["sg4647@barnard.edu"].map((e) => e.toLowerCase())
 );
 
 const PORT = process.env.PORT || 3001;
@@ -56,7 +57,7 @@ oauth2Client.on("tokens", (tokens) => {
       TOKEN_PATH,
       JSON.stringify({ ...data, tokens: newTokens }, null, 2)
     );
-    console.log("🔄 Tokens refreshed and saved.");
+    console.log(" Tokens refreshed and saved.");
   }
 });
 
@@ -67,9 +68,9 @@ if (fs.existsSync(TOKEN_PATH)) {
     const data = JSON.parse(fs.readFileSync(TOKEN_PATH, "utf8"));
     oauth2Client.setCredentials(data.tokens);
     currentUserEmail = data.userEmail;
-    console.log(`✅ Loaded credentials for: ${currentUserEmail}`);
+    console.log(` Loaded credentials for: ${currentUserEmail}`);
   } catch (err) {
-    console.error("❌ Error loading token file:", err);
+    console.error(" Error loading token file:", err);
   }
 }
 
@@ -178,7 +179,7 @@ app.get("/api/gmail/callback", async (req, res) => {
     );
 
     res.send(
-      `<h1>✅ Gmail Connected</h1><p>Logged in as: ${currentUserEmail}</p><script>window.close();</script>`
+      `<h1> Gmail Connected</h1><p>Logged in as: ${currentUserEmail}</p><script>window.close();</script>`
     );
   } catch (error) {
     console.error("Auth Error:", error);
@@ -247,7 +248,7 @@ app.get("/api/emails/unread", async (req, res) => {
 
     res.json({ emails });
   } catch (error) {
-    console.error("❌ Error fetching emails:", error);
+    console.error(" Error fetching emails:", error);
     res.status(500).json({ error: error.message });
   }
 });
@@ -305,7 +306,7 @@ Write a concise, natural reply. No subject line, no signature, just the body.
       length: text.length,
     });
   } catch (error) {
-    console.error("❌ AI Error:", error.message);
+    console.error(" AI Error:", error.message);
     res.status(500).json({ error: error.message });
   }
 });
@@ -344,7 +345,7 @@ Provide a clear, concise response.
       groqApiCalls: groqCalls,
     });
   } catch (error) {
-    console.error("❌ AI Error:", error.message);
+    console.error(" AI Error:", error.message);
     res.status(500).json({ error: error.message });
   }
 });
@@ -375,9 +376,9 @@ app.post("/api/emails/send", async (req, res) => {
     const shouldSendRealEmail = !TEST_MODE || isAllowedUser;
 
     if (!shouldSendRealEmail) {
-      console.log(`🧪 TEST MODE BLOCKED: Simulated sending to ${toEmail}`);
+      console.log(` TEST MODE BLOCKED: Simulated sending to ${toEmail}`);
       console.log(`   Subject: Re: ${subject}`);
-      console.log(`   Body: ${replyBody.substring(0, 100)}...`);
+      console.log(`   Body: ${replycdBody.substring(0, 100)}...`);
 
       return res.json({
         success: true,
@@ -403,7 +404,7 @@ app.post("/api/emails/send", async (req, res) => {
       requestBody: { raw, threadId },
     });
 
-    console.log(`🚀 REAL EMAIL SENT to ${toEmail}`);
+    console.log(` REAL EMAIL SENT to ${toEmail}`);
 
     res.json({
       success: true,
@@ -416,7 +417,7 @@ app.post("/api/emails/send", async (req, res) => {
       },
     });
   } catch (error) {
-    console.error("❌ Send Error:", error.message);
+    console.error(" Send Error:", error.message);
     res.status(500).json({ error: error.message });
   }
 });
@@ -438,7 +439,7 @@ app.post("/api/emails/markread", async (req, res) => {
 
     res.json({ success: true });
   } catch (error) {
-    console.error("❌ Mark Read Error:", error.message);
+    console.error(" Mark Read Error:", error.message);
     res.status(500).json({ error: error.message });
   }
 });
@@ -446,11 +447,11 @@ app.post("/api/emails/markread", async (req, res) => {
 /* ──────────────────────────── START ──────────────────────────── */
 
 app.listen(PORT, () => {
-  console.log(`📧 Gmail AI Agent running on http://localhost:${PORT}`);
-  console.log(`🧪 TEST MODE: ${TEST_MODE ? "ON" : "OFF"}`);
-  console.log(`🔢 Max Emails Per Run: ${MAX_EMAILS_PER_RUN}`);
+  console.log(` Gmail AI Agent running on http://localhost:${PORT}`);
+  console.log(` TEST MODE: ${TEST_MODE ? "ON" : "OFF"}`);
+  console.log(` Max Emails Per Run: ${MAX_EMAILS_PER_RUN}`);
   console.log(
-    `👤 Allowed Test User: ${Array.from(ALLOWED_TEST_EMAILS).join(", ")}`
+    ` Allowed Test User: ${Array.from(ALLOWED_TEST_EMAILS).join(", ")}`
   );
-  console.log(`\n🔗 Connect Gmail: http://localhost:${PORT}/api/gmail/auth`);
+  console.log(`\n Connect Gmail: http://localhost:${PORT}/api/gmail/auth`);
 });

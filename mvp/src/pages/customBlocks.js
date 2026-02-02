@@ -17,7 +17,7 @@ import { javascriptGenerator } from "blockly/javascript";
 Blockly.Blocks["agent_start"] = {
   init: function () {
     this.appendDummyInput()
-      .appendField("🤖 Start Agent:")
+      .appendField(" Start Agent:")
       .appendField(
         new Blockly.FieldDropdown([
           ["Customer Support", "support"],
@@ -42,7 +42,7 @@ javascriptGenerator.forBlock["agent_start"] = function (block) {
 
   const code = `
 // ${agentType.toUpperCase()} AGENT
-context.log("🤖 Starting ${agentType} agent...");
+context.log(" Starting ${agentType} agent...");
 ${steps}
 `;
   return code;
@@ -50,7 +50,7 @@ ${steps}
 
 Blockly.Blocks["if_contains"] = {
   init: function () {
-    this.appendValueInput("TEXT").setCheck(null).appendField("❓ If this text");
+    this.appendValueInput("TEXT").setCheck(null).appendField(" If this text");
     this.appendDummyInput()
       .appendField("contains keyword:")
       .appendField(new Blockly.FieldTextInput("urgent"), "KEYWORD");
@@ -87,7 +87,7 @@ ${doCode}}
 Blockly.Blocks["input_data"] = {
   init: function () {
     this.appendDummyInput()
-      .appendField("📥 Get input field:")
+      .appendField(" Get input field:")
       .appendField(new Blockly.FieldTextInput("emailBody"), "FIELD_NAME");
     this.setOutput(true, "String");
     this.setColour("#f59e0b");
@@ -111,7 +111,7 @@ javascriptGenerator.forBlock["input_data"] = function (block) {
 Blockly.Blocks["gmail_fetch_unread"] = {
   init: function () {
     this.appendDummyInput()
-      .appendField("📧 Fetch")
+      .appendField(" Fetch")
       .appendField(
         new Blockly.FieldDropdown([
           ["all unread", "all"],
@@ -143,7 +143,7 @@ const allEmails = await context.fetchEmails();
 const ${varName} = ${
     maxEmails === "all" ? "allEmails" : `allEmails.slice(0, ${maxEmails})`
   };
-context.log(\`📬 Processing \${${varName}.length} of \${allEmails.length} unread email(s)\`);
+context.log(\` Processing \${${varName}.length} of \${allEmails.length} unread email(s)\`);
 `;
   return code;
 };
@@ -151,7 +151,7 @@ context.log(\`📬 Processing \${${varName}.length} of \${allEmails.length} unre
 Blockly.Blocks["gmail_for_each_email"] = {
   init: function () {
     this.appendDummyInput()
-      .appendField("🔄 For each email in:")
+      .appendField(" For each email in:")
       .appendField(new Blockly.FieldTextInput("emails"), "EMAIL_LIST");
     this.appendStatementInput("DO").setCheck(null).appendField("do:");
     this.setPreviousStatement(true, null);
@@ -168,10 +168,10 @@ javascriptGenerator.forBlock["gmail_for_each_email"] = function (block) {
   const code = `
 if (Array.isArray(${emailList})) {
   for (const currentEmail of ${emailList}) {
-    context.log(\`📧 Processing email from: \${currentEmail.from}\`);
+    context.log(\` Processing email from: \${currentEmail.from}\`);
 ${doCode}  }
 } else {
-  context.log("⚠️  ${emailList} is not an array, skipping loop");
+  context.log("  ${emailList} is not an array, skipping loop");
 }
 `;
   return code;
@@ -180,7 +180,7 @@ ${doCode}  }
 Blockly.Blocks["gmail_get_property"] = {
   init: function () {
     this.appendDummyInput()
-      .appendField("📬 Get from current email:")
+      .appendField(" Get from current email:")
       .appendField(
         new Blockly.FieldDropdown([
           ["Subject", "subject"],
@@ -211,7 +211,7 @@ javascriptGenerator.forBlock["gmail_get_property"] = function (block) {
 Blockly.Blocks["gmail_send_reply"] = {
   init: function () {
     this.appendDummyInput()
-      .appendField("✉️ Send reply using:")
+      .appendField(" Send reply using:")
       .appendField(new Blockly.FieldTextInput("response"), "REPLY_VAR");
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
@@ -232,9 +232,9 @@ if (currentEmail && ${replyVar}) {
     currentEmail.from,
     currentEmail.threadId
   );
-  context.log(\`✅ Reply sent to: \${currentEmail.from}\`);
+  context.log(\` Reply sent to: \${currentEmail.from}\`);
 } else {
-  context.log(\`⚠️  Cannot send reply: \${!currentEmail ? "no current email" : "reply is empty"}\`);
+  context.log(\`  Cannot send reply: \${!currentEmail ? "no current email" : "reply is empty"}\`);
 }
 `;
   return code;
@@ -242,7 +242,7 @@ if (currentEmail && ${replyVar}) {
 
 Blockly.Blocks["gmail_mark_read"] = {
   init: function () {
-    this.appendDummyInput().appendField("✅ Mark current email as read");
+    this.appendDummyInput().appendField(" Mark current email as read");
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
     this.setColour("#3b82f6");
@@ -256,7 +256,7 @@ if (currentEmail?.id) {
   await context.markRead(currentEmail.id);
   context.log("✓ Email marked as read");
 } else {
-  context.log("⚠️  No current email to mark as read");
+  context.log("  No current email to mark as read");
 }
 `;
   return code;
@@ -268,7 +268,7 @@ if (currentEmail?.id) {
 
 Blockly.Blocks["ai_analyze"] = {
   init: function () {
-    this.appendValueInput("INPUT").setCheck(null).appendField("🧠 AI Analyze");
+    this.appendValueInput("INPUT").setCheck(null).appendField(" AI Analyze");
     this.appendDummyInput()
       .appendField("Task:")
       .appendField(
@@ -308,7 +308,7 @@ context.log("✓ AI Analysis complete, saved as '${varName}'");
 
 Blockly.Blocks["ai_generate"] = {
   init: function () {
-    this.appendValueInput("INPUT").setCheck(null).appendField("✨ AI Generate");
+    this.appendValueInput("INPUT").setCheck(null).appendField(" AI Generate");
     this.appendDummyInput()
       .appendField("Task:")
       .appendField(
@@ -348,7 +348,7 @@ context.log("✓ AI Generation complete, saved as '${varName}'");
 
 Blockly.Blocks["ai_extract"] = {
   init: function () {
-    this.appendValueInput("INPUT").setCheck(null).appendField("🔍 AI Extract");
+    this.appendValueInput("INPUT").setCheck(null).appendField(" AI Extract");
     this.appendDummyInput()
       .appendField("What to extract:")
       .appendField(
@@ -411,7 +411,7 @@ javascriptGenerator.forBlock["simple_text"] = function (block) {
 Blockly.Blocks["get_variable"] = {
   init: function () {
     this.appendDummyInput()
-      .appendField("📦 Get:")
+      .appendField(" Get:")
       .appendField(new Blockly.FieldTextInput("variable"), "VAR");
     this.setOutput(true, null);
     this.setColour("#6b7280");
@@ -426,7 +426,7 @@ javascriptGenerator.forBlock["get_variable"] = function (block) {
 
 Blockly.Blocks["combine_text"] = {
   init: function () {
-    this.appendValueInput("TEXT1").setCheck(null).appendField("🔗 Combine");
+    this.appendValueInput("TEXT1").setCheck(null).appendField(" Combine");
     this.appendValueInput("TEXT2").setCheck(null).appendField("with");
     this.setOutput(true, "String");
     this.setColour("#6b7280");
@@ -461,7 +461,7 @@ Blockly.Blocks["display_result"] = {
   init: function () {
     this.appendValueInput("RESULT")
       .setCheck(null)
-      .appendField("📤 Display result:");
+      .appendField(" Display result:");
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
     this.setColour("#ec4899");
@@ -485,7 +485,7 @@ context.output(${result});
 
 Blockly.Blocks["log_message"] = {
   init: function () {
-    this.appendValueInput("MESSAGE").setCheck(null).appendField("📝 Log:");
+    this.appendValueInput("MESSAGE").setCheck(null).appendField(" Log:");
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
     this.setColour("#6b7280");
@@ -512,9 +512,9 @@ context.log(${message});
 // ============================================================================
 
 export const initializeBlocks = () => {
-  console.log("✅ Custom AI Agent blocks initialized (V3 - IMPROVED)");
-  console.log("   ✨ NEW: Email count control in fetch block");
-  console.log("   ✨ NEW: Better variable handling in send reply");
+  console.log(" Custom AI Agent blocks initialized (V3 - IMPROVED)");
+  console.log("    NEW: Email count control in fetch block");
+  console.log("    NEW: Better variable handling in send reply");
   console.log("   - Control blocks: agent_start, if_contains");
   console.log("   - Input blocks: input_data");
   console.log(
